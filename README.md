@@ -1,4 +1,4 @@
 QtWaitingSpinner
 ================
 
-configurable custom Qt widget for showing waiting spinner icon
+This is configurable custom Qt widget for showing waiting spinner icon.
