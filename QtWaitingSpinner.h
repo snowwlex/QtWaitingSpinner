@@ -1,5 +1,5 @@
-#ifndef SPINNER_H
-#define SPINNER_H
+#ifndef QTWAITINGSPINNER_H
+#define QTWAITINGSPINNER_H
 
 #include <QtCore/QTimer>
 
@@ -56,4 +56,4 @@ private:
 	int myCurrentCounter;
 };
 
-#endif // SPINNER_H
+#endif // QTWAITINGSPINNER_H
