@@ -1,7 +1,7 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
-#include <QDialog>
+#include <QtGui/QDialog>
 
 #include <QtWaitingSpinner.h>
 

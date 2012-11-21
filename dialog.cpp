@@ -1,4 +1,4 @@
-#include <QVBoxLayout>
+#include <QtGui/QVBoxLayout>
 
 #include "dialog.h"
 
