@@ -11,9 +11,6 @@ class Dialog : public QDialog {
 public:
 	explicit Dialog(QWidget *parent = 0);
 	~Dialog();
-	
-private:
-	QtWaitingSpinner *mySpinner;
 
 };
 
