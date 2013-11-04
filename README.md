@@ -1,9 +1,9 @@
 QtWaitingSpinner
 ================
 
-This is configurable custom Qt widget for showing waiting spinner icon.
+This is configurable custom Qt widget for showing waiting spinner icon. If you're looking for somewhat like loading icon, implemented as Qt widget, you're in the right place.
 
-How it looks?
+How does it look?
 =============
 
 Some spinners with different parameters: 
