@@ -1,8 +1,14 @@
 #ifndef QTWAITINGSPINNER_H
 #define QTWAITINGSPINNER_H
 
+#include "qglobal.h"
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+   #include <QtGui/QWidget>
+ #else
+   #include <QtWidgets/QWidget>
+ #endif
+
 #include <QtCore/QTimer>
-#include <QtWidgets/QWidget>
 #include <QtGui/QColor>
 
 class QtWaitingSpinner : public QWidget {
