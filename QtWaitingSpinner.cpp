@@ -1,6 +1,3 @@
-#include <cmath>
-#include <algorithm>
-
 #include <QtGui/QPainter>
 #include <QtCore/QTimer>
 
