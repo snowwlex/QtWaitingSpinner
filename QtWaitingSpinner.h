@@ -8,14 +8,16 @@
    #include <QtWidgets/QWidget>
  #endif
 
-#include <QtCore/QTimer>
 #include <QtGui/QColor>
+
+class QTimer;
 
 class QtWaitingSpinner : public QWidget {
 	Q_OBJECT
 
 public:
-	explicit QtWaitingSpinner(int linesNumber = 12, int length = 7, int width = 5, int radius = 10, QWidget *parent = 0);
+    QtWaitingSpinner(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    QtWaitingSpinner(int linesNumber = 12, int length = 7, int width = 5, int radius = 10, QWidget *parent = 0);
 
 public Q_SLOTS:
 	void start();
@@ -44,6 +46,8 @@ private:
 	static int countTimeout(int lines, qreal speed);
 	static int lineDistance(int from, int to, int lines);
 	static QColor countTrailColor(int distance, int lines, int trail, int minOpacity, QColor color);
+
+    void initialise();
 
 private:
 	int myLinesNumber;

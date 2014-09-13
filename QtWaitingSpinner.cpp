@@ -2,26 +2,59 @@
 #include <algorithm>
 
 #include <QtGui/QPainter>
+#include <QtCore/QTimer>
 
 #include "QtWaitingSpinner.h"
+
+// Defaults
+const QColor c_color(Qt::black);
+const qreal c_roundness(70.0);
+const int c_lines(12);
+const int c_length(7);
+const int c_width(5);
+const int c_radius(10);
+const int c_speed(1);
+const int c_trail(70);
+const int c_opacity(15);
+
+QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowFlags flags) : QWidget(parent, flags),
+    myLinesNumber(c_lines),
+    myLength(c_length + c_width),
+    myWidth(c_width),
+    myRadius(c_radius),
+    myRoundness(c_roundness),
+    myColor(c_color),
+    mySpeed(c_speed),
+    myTrail(c_trail),
+    myOpacity(c_opacity),
+    myTimer(NULL),
+    myCurrentCounter(0)
+{
+    initialise();
+}
 
 QtWaitingSpinner::QtWaitingSpinner(int linesNumber, int length, int width, int radius, QWidget *parent) : QWidget(parent),
 	myLinesNumber(linesNumber),
 	myLength(length + width),
 	myWidth(width),
 	myRadius(radius),
-	myRoundness(70.0),
-	myColor(Qt::black),
-	mySpeed(1),
-	myTrail(70),
-	myOpacity(15)
+    myRoundness(c_roundness),
+    myColor(c_color),
+    mySpeed(c_speed),
+    myTrail(c_trail),
+    myOpacity(c_opacity),
+    myTimer(NULL),
+    myCurrentCounter(0)
 {
-	myCurrentCounter = 0;
-	myTimer = new QTimer(this);
-	connect(myTimer,SIGNAL(timeout()), this, SLOT(rotate()));
-	updateSize();
-	updateTimer();
-	this->hide();
+    initialise();
+}
+
+void QtWaitingSpinner::initialise() {
+    myTimer = new QTimer(this);
+    connect(myTimer,SIGNAL(timeout()), this, SLOT(rotate()));
+    updateSize();
+    updateTimer();
+    this->hide();
 }
 
 void QtWaitingSpinner::paintEvent(QPaintEvent */*ev*/) {
@@ -150,6 +183,6 @@ QColor QtWaitingSpinner::countTrailColor(int distance, int lines, int trail, int
 	qreal resultAlpha = color.alphaF() - gradation * distance;
 	resultAlpha = std::min(1.0, std::max(0.0, resultAlpha)); //if alpha is out of bound, force it to bounds
 	color.setAlphaF(resultAlpha);
-	return color;
+    return color;
 }
 
