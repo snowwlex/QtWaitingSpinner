@@ -34,7 +34,6 @@ class QTimer;
 
 class QtWaitingSpinner : public QWidget {
   Q_OBJECT
-
 public:
   QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
                    bool centreOnParent);
@@ -44,13 +43,13 @@ public Q_SLOTS:
   void finish();
 
 public:
-  void setLinesNumber(int linesNumber);
+  void setColor(QColor color);
+  void setRoundness(qreal roundness);
+  void setSpeed(qreal speed);
+  void setNumberOfLines(int lines);
   void setLength(int length);
   void setWidth(int width);
   void setRadius(int radius);
-  void setRoundness(qreal roundness);
-  void setColor(QColor color);
-  void setSpeed(qreal speed);
   void setTrail(int trail);
   void setOpacity(int minOpacity);
 
@@ -72,22 +71,22 @@ private:
   void updatePosition();
 
 private:
-  int myLinesNumber;
-  int myLength;
-  int myWidth;
-  int myRadius;
-  qreal myRoundness; // 0..100
-  QColor myColor;
-  qreal mySpeed; // in rounds per second
-  int myTrail;
-  int myOpacity;
-
-  bool myCentreOnParent;
+  // Configurable settings.
+  QColor m_color;
+  qreal m_roundness; // 0..100
+  qreal m_speed;     // in rounds per second
+  int m_numberOfLines;
+  int m_length;
+  int m_width;
+  int m_radius;
+  int m_trail;
+  int m_opacity;
 
 private:
-  QTimer *myTimer;
-  QWidget *myParent;
-  int myCurrentCounter;
+  QTimer *m_timer;
+  QWidget *m_parent;
+  bool m_centreOnParent;
+  int m_currentCounter;
 };
 
 #endif // QTWAITINGSPINNER_H

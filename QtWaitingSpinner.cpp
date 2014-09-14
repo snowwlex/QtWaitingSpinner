@@ -44,10 +44,15 @@ const int c_opacity(15);
 QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
                                    bool centreOnParent)
     : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
-      myLinesNumber(c_lines), myLength(c_length + c_width), myWidth(c_width),
-      myRadius(c_radius), myRoundness(c_roundness), myColor(c_color),
-      mySpeed(c_speed), myTrail(c_trail), myOpacity(c_opacity), myTimer(NULL),
-      myParent(parent), myCurrentCounter(0), myCentreOnParent(centreOnParent) {
+
+      // Configurable settings.
+      m_color(c_color), m_roundness(c_roundness), m_speed(c_speed),
+      m_numberOfLines(c_lines), m_length(c_length + c_width), m_width(c_width),
+      m_radius(c_radius), m_trail(c_trail), m_opacity(c_opacity),
+
+      // Other
+      m_timer(NULL), m_parent(parent), m_centreOnParent(centreOnParent),
+      m_currentCounter(0) {
   initialise();
 
   // We need to set the window modality AFTER we've hidden the
@@ -59,8 +64,8 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::initialise() {
-  myTimer = new QTimer(this);
-  connect(myTimer, SIGNAL(timeout()), this, SLOT(rotate()));
+  m_timer = new QTimer(this);
+  connect(m_timer, SIGNAL(timeout()), this, SLOT(rotate()));
   updateSize();
   updateTimer();
   this->hide();
@@ -73,23 +78,23 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
   painter.fillRect(this->rect(), Qt::transparent);
   painter.setRenderHint(QPainter::Antialiasing, true);
 
-  if (myCurrentCounter >= myLinesNumber) {
-    myCurrentCounter = 0;
+  if (m_currentCounter >= m_numberOfLines) {
+    m_currentCounter = 0;
   }
   painter.setPen(Qt::NoPen);
-  for (int i = 0; i < myLinesNumber; ++i) {
+  for (int i = 0; i < m_numberOfLines; ++i) {
     painter.save();
-    painter.translate(myRadius + myLength, myRadius + myLength);
-    qreal rotateAngle = (qreal)360 * qreal(i) / qreal(myLinesNumber);
+    painter.translate(m_radius + m_length, m_radius + m_length);
+    qreal rotateAngle = (qreal)360 * qreal(i) / qreal(m_numberOfLines);
     painter.rotate(rotateAngle);
-    painter.translate(myRadius, 0);
-    int distance = lineDistance(i, myCurrentCounter, myLinesNumber);
+    painter.translate(m_radius, 0);
+    int distance = lineDistance(i, m_currentCounter, m_numberOfLines);
     QColor color =
-        countTrailColor(distance, myLinesNumber, myTrail, myOpacity, myColor);
+        countTrailColor(distance, m_numberOfLines, m_trail, m_opacity, m_color);
     painter.setBrush(color);
     // TODO improve the way rounded rect is painted
-    painter.drawRoundedRect(QRect(0, -myWidth / 2, myLength, myWidth),
-                            myRoundness, myRoundness, Qt::RelativeSize);
+    painter.drawRoundedRect(QRect(0, -m_width / 2, m_length, m_width),
+                            m_roundness, m_roundness, Qt::RelativeSize);
     painter.restore();
   }
 }
@@ -99,9 +104,9 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
 void QtWaitingSpinner::start() {
   updatePosition();
   this->show();
-  if (!myTimer->isActive()) {
-    myTimer->start();
-    myCurrentCounter = 0;
+  if (!m_timer->isActive()) {
+    m_timer->start();
+    m_currentCounter = 0;
   }
 }
 
@@ -109,72 +114,72 @@ void QtWaitingSpinner::start() {
 
 void QtWaitingSpinner::finish() {
   this->hide();
-  if (myTimer->isActive()) {
-    myTimer->stop();
-    myCurrentCounter = 0;
+  if (m_timer->isActive()) {
+    m_timer->stop();
+    m_currentCounter = 0;
   }
 }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setLinesNumber(int linesNumber) {
-  myLinesNumber = linesNumber;
-  myCurrentCounter = 0;
+void QtWaitingSpinner::setNumberOfLines(int lines) {
+  m_numberOfLines = lines;
+  m_currentCounter = 0;
   updateTimer();
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setLength(int length) {
-  myLength = length;
+  m_length = length;
   updateSize();
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setWidth(int width) {
-  myWidth = width;
+  m_width = width;
   updateSize();
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setRadius(int radius) {
-  myRadius = radius;
+  m_radius = radius;
   updateSize();
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setRoundness(qreal roundness) {
-  myRoundness = std::max(0.0, std::min(100.0, roundness));
+  m_roundness = std::max(0.0, std::min(100.0, roundness));
 }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setColor(QColor color) { myColor = color; }
+void QtWaitingSpinner::setColor(QColor color) { m_color = color; }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setSpeed(qreal speed) {
-  mySpeed = speed;
+  m_speed = speed;
   updateTimer();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setTrail(int trail) { myTrail = trail; }
+void QtWaitingSpinner::setTrail(int trail) { m_trail = trail; }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setOpacity(int minOpacity) { myOpacity = minOpacity; }
+void QtWaitingSpinner::setOpacity(int minOpacity) { m_opacity = minOpacity; }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::rotate() {
-  ++myCurrentCounter;
-  if (myCurrentCounter >= myLinesNumber) {
-    myCurrentCounter = 0;
+  ++m_currentCounter;
+  if (m_currentCounter >= m_numberOfLines) {
+    m_currentCounter = 0;
   }
   update();
 }
@@ -182,21 +187,21 @@ void QtWaitingSpinner::rotate() {
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updateSize() {
-  int size = (myRadius + myLength) * 2;
+  int size = (m_radius + m_length) * 2;
   setFixedSize(size, size);
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updateTimer() {
-  myTimer->setInterval(countTimeout(myLinesNumber, mySpeed));
+  m_timer->setInterval(countTimeout(m_numberOfLines, m_speed));
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updatePosition() {
-  if (myParent && myCentreOnParent) {
-    this->move(myParent->frameGeometry().topLeft() + myParent->rect().center() -
+  if (m_parent && m_centreOnParent) {
+    this->move(m_parent->frameGeometry().topLeft() + m_parent->rect().center() -
                this->rect().center());
   }
 }
