@@ -35,8 +35,8 @@ class QTimer;
 class QtWaitingSpinner : public QWidget {
   Q_OBJECT
 public:
-  QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
-                   bool centreOnParent);
+  explicit QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
+                            bool centreOnParent);
 
 public Q_SLOTS:
   void start();
@@ -63,8 +63,9 @@ private:
   static int calculateTimerInterval(int lines, int speed);
   static int lineCountDistanceFromPrimary(int current, int primary,
                                           int totalNrOfLines);
-  static QColor currentLineColor(int distance, int totalNrOfLines, qreal trailFadePerc,
-                                 qreal minOpacity, QColor color);
+  static QColor currentLineColor(int distance, int totalNrOfLines,
+                                 qreal trailFadePerc, qreal minOpacity,
+                                 QColor color);
 
   void initialise();
   void updateSize();
