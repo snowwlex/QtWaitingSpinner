@@ -61,9 +61,10 @@ protected:
 
 private:
   static int calculateTimerInterval(int lines, qreal speed);
-  static int lineDistance(int from, int to, int lines);
-  static QColor currentLineColor(int distance, int lines, int trail,
-                                int minOpacity, QColor color);
+  static int lineCountDistanceFromPrimary(int current, int primary,
+                                          int totalNrOfLines);
+  static QColor currentLineColor(int distance, int totalNrOfLines, int trail,
+                                 int minOpacity, QColor color);
 
   void initialise();
   void updateSize();

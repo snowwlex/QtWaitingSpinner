@@ -90,7 +90,8 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
     qreal rotateAngle = (qreal)360 * qreal(i) / qreal(m_numberOfLines);
     painter.rotate(rotateAngle);
     painter.translate(m_innerRadius, 0);
-    int distance = lineDistance(i, m_currentCounter, m_numberOfLines);
+    int distance =
+        lineCountDistanceFromPrimary(i, m_currentCounter, m_numberOfLines);
     QColor color = currentLineColor(distance, m_numberOfLines,
                                     m_trailFadeFactor, m_trailOpacity, m_color);
     painter.setBrush(color);
@@ -221,30 +222,32 @@ int QtWaitingSpinner::calculateTimerInterval(int lines, qreal speed) {
 
 /*----------------------------------------------------------------------------*/
 
-int QtWaitingSpinner::lineDistance(int from, int to, int lines) {
-  int result = to - from;
-  if (result < 0) {
-    result += lines;
+int QtWaitingSpinner::lineCountDistanceFromPrimary(int current, int primary,
+                                                   int totalNrOfLines) {
+  int distance = primary - current;
+  if (distance < 0) {
+    distance += totalNrOfLines;
   }
-  return result;
+  return distance;
 }
 
 /*----------------------------------------------------------------------------*/
 
-QColor QtWaitingSpinner::currentLineColor(int distance, int lines, int trail,
-                                          int minOpacity, QColor color) {
-  if (distance == 0) {
+QColor QtWaitingSpinner::currentLineColor(int countDistance, int totalNrOfLines,
+                                          int trail, int minOpacity,
+                                          QColor color) {
+  if (countDistance == 0) {
     return color;
   }
   const qreal minAlphaF = (qreal)minOpacity / 100;
-  int distanceThreshold = ceil((lines - 1) * (qreal)trail / 100);
-  if (distance > distanceThreshold) {
+  int distanceThreshold = ceil((totalNrOfLines - 1) * (qreal)trail / 100);
+  if (countDistance > distanceThreshold) {
     color.setAlphaF(minAlphaF);
     return color;
   }
   qreal alphaDiff = color.alphaF() - (qreal)minAlphaF;
-  qreal gradation = alphaDiff / (qreal)(distanceThreshold + 1);
-  qreal resultAlpha = color.alphaF() - gradation * distance;
+  qreal gradient = alphaDiff / (qreal)(distanceThreshold + 1);
+  qreal resultAlpha = color.alphaF() - gradient * countDistance;
 
   // If alpha is out of bounds, clip it.
   resultAlpha = std::min(1.0, std::max(0.0, resultAlpha));
