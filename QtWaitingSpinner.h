@@ -1,4 +1,5 @@
-/*Copyright (c) 2012-2014 Alexander Turkin
+/* Original Work Copyright (c) 2012-2014 Alexander Turkin
+   Modified 2014 by William Hallatt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -22,69 +23,71 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "qglobal.h"
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-   #include <QtGui/QWidget>
- #else
-   #include <QtWidgets/QWidget>
- #endif
+#include <QtGui/QWidget>
+#else
+#include <QtWidgets/QWidget>
+#endif
 
 #include <QtGui/QColor>
 
 class QTimer;
 
 class QtWaitingSpinner : public QWidget {
-	Q_OBJECT
+  Q_OBJECT
 
 public:
-    QtWaitingSpinner(QWidget* parent, Qt::WindowModality modality, bool centreOnParent);
+  QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
+                   bool centreOnParent);
 
 public Q_SLOTS:
-	void start();
-	void finish();
+  void start();
+  void finish();
 
 public:
-	void setLinesNumber(int linesNumber);
-	void setLength(int length);
-	void setWidth(int width);
-	void setRadius(int radius);
-	void setRoundness(qreal roundness);
-	void setColor(QColor color);
-	void setSpeed(qreal speed);
-	void setTrail(int trail);
-	void setOpacity(int minOpacity);
+  void setLinesNumber(int linesNumber);
+  void setLength(int length);
+  void setWidth(int width);
+  void setRadius(int radius);
+  void setRoundness(qreal roundness);
+  void setColor(QColor color);
+  void setSpeed(qreal speed);
+  void setTrail(int trail);
+  void setOpacity(int minOpacity);
 
 private Q_SLOTS:
-    void rotate();
+  void rotate();
 
 protected:
-	void paintEvent(QPaintEvent *ev);
+  void paintEvent(QPaintEvent *ev);
 
 private:
-	static int countTimeout(int lines, qreal speed);
-	static int lineDistance(int from, int to, int lines);
-	static QColor countTrailColor(int distance, int lines, int trail, int minOpacity, QColor color);
+  static int countTimeout(int lines, qreal speed);
+  static int lineDistance(int from, int to, int lines);
+  static QColor countTrailColor(int distance, int lines, int trail,
+                                int minOpacity, QColor color);
 
-    void initialise();
-    void updateSize();
-    void updateTimer();
-    void updatePosition();
-
-private:
-	int myLinesNumber;
-	int myLength;
-	int myWidth;
-	int myRadius;
-	qreal myRoundness; //0..100
-	QColor myColor;
-	qreal mySpeed; // in rounds per second
-	int myTrail;
-	int myOpacity;
-
-    bool myCentreOnParent;
+  void initialise();
+  void updateSize();
+  void updateTimer();
+  void updatePosition();
 
 private:
-	QTimer *myTimer;
-    QWidget *myParent;
-	int myCurrentCounter;
+  int myLinesNumber;
+  int myLength;
+  int myWidth;
+  int myRadius;
+  qreal myRoundness; // 0..100
+  QColor myColor;
+  qreal mySpeed; // in rounds per second
+  int myTrail;
+  int myOpacity;
+
+  bool myCentreOnParent;
+
+private:
+  QTimer *myTimer;
+  QWidget *myParent;
+  int myCurrentCounter;
 };
 
 #endif // QTWAITINGSPINNER_H
