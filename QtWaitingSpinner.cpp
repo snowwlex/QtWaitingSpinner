@@ -35,7 +35,7 @@ const int c_lines(12);
 const int c_lineLength(10);
 const int c_lineWidth(5);
 const int c_innerRadius(10);
-const int c_speed(1);
+const int c_revPerSec(1);
 const int c_trailFadeFactor(70);
 const int c_trailOpacity(15);
 
@@ -46,7 +46,7 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
     : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
 
       // Configurable settings.
-      m_color(c_color), m_roundness(c_roundness), m_speed(c_speed),
+      m_color(c_color), m_roundness(c_roundness), m_revPerSec(c_revPerSec),
       m_numberOfLines(c_lines), m_lineLength(c_lineLength + c_lineWidth),
       m_lineWidth(c_lineWidth), m_innerRadius(c_innerRadius),
       m_trailFadeFactor(c_trailFadeFactor), m_trailOpacity(c_trailOpacity),
@@ -165,8 +165,8 @@ void QtWaitingSpinner::setColor(QColor color) { m_color = color; }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setSpeed(qreal speed) {
-  m_speed = speed;
+void QtWaitingSpinner::setRevolutionsPerSecond(int rps) {
+  m_revPerSec = rps;
   updateTimer();
 }
 
@@ -202,7 +202,7 @@ void QtWaitingSpinner::updateSize() {
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updateTimer() {
-  m_timer->setInterval(calculateTimerInterval(m_numberOfLines, m_speed));
+  m_timer->setInterval(calculateTimerInterval(m_numberOfLines, m_revPerSec));
 }
 
 /*----------------------------------------------------------------------------*/
@@ -216,7 +216,7 @@ void QtWaitingSpinner::updatePosition() {
 
 /*----------------------------------------------------------------------------*/
 
-int QtWaitingSpinner::calculateTimerInterval(int lines, qreal speed) {
+int QtWaitingSpinner::calculateTimerInterval(int lines, int speed) {
   return 1000 / (lines * speed);
 }
 

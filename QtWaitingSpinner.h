@@ -45,7 +45,7 @@ public Q_SLOTS:
 public:
   void setColor(QColor color);
   void setRoundness(qreal roundness);
-  void setSpeed(qreal speed);
+  void setRevolutionsPerSecond(int rps);
   void setNumberOfLines(int lines);
   void setLineLength(int length);
   void setLineWidth(int width);
@@ -60,7 +60,7 @@ protected:
   void paintEvent(QPaintEvent *ev);
 
 private:
-  static int calculateTimerInterval(int lines, qreal speed);
+  static int calculateTimerInterval(int lines, int speed);
   static int lineCountDistanceFromPrimary(int current, int primary,
                                           int totalNrOfLines);
   static QColor currentLineColor(int distance, int totalNrOfLines, int trail,
@@ -75,7 +75,7 @@ private:
   // Configurable settings.
   QColor m_color;
   qreal m_roundness; // 0..100
-  qreal m_speed;     // in rounds per second
+  int m_revPerSec;   // revolutions per second
   int m_numberOfLines;
   int m_lineLength;
   int m_lineWidth;
