@@ -32,12 +32,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 const QColor c_color(Qt::black);
 const qreal c_roundness(70.0);
 const int c_lines(12);
-const int c_length(7);
-const int c_width(5);
-const int c_radius(10);
+const int c_lineLength(10);
+const int c_lineWidth(5);
+const int c_innerRadius(10);
 const int c_speed(1);
-const int c_trail(70);
-const int c_opacity(15);
+const int c_trailFadeFactor(70);
+const int c_trailOpacity(15);
 
 /*----------------------------------------------------------------------------*/
 
@@ -47,8 +47,9 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
 
       // Configurable settings.
       m_color(c_color), m_roundness(c_roundness), m_speed(c_speed),
-      m_numberOfLines(c_lines), m_length(c_length + c_width), m_width(c_width),
-      m_radius(c_radius), m_trail(c_trail), m_opacity(c_opacity),
+      m_numberOfLines(c_lines), m_lineLength(c_lineLength + c_lineWidth),
+      m_lineWidth(c_lineWidth), m_innerRadius(c_innerRadius),
+      m_trailFadeFactor(c_trailFadeFactor), m_trailOpacity(c_trailOpacity),
 
       // Other
       m_timer(NULL), m_parent(parent), m_centreOnParent(centreOnParent),
@@ -84,17 +85,19 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
   painter.setPen(Qt::NoPen);
   for (int i = 0; i < m_numberOfLines; ++i) {
     painter.save();
-    painter.translate(m_radius + m_length, m_radius + m_length);
+    painter.translate(m_innerRadius + m_lineLength,
+                      m_innerRadius + m_lineLength);
     qreal rotateAngle = (qreal)360 * qreal(i) / qreal(m_numberOfLines);
     painter.rotate(rotateAngle);
-    painter.translate(m_radius, 0);
+    painter.translate(m_innerRadius, 0);
     int distance = lineDistance(i, m_currentCounter, m_numberOfLines);
-    QColor color =
-        countTrailColor(distance, m_numberOfLines, m_trail, m_opacity, m_color);
+    QColor color = currentLineColor(distance, m_numberOfLines,
+                                    m_trailFadeFactor, m_trailOpacity, m_color);
     painter.setBrush(color);
     // TODO improve the way rounded rect is painted
-    painter.drawRoundedRect(QRect(0, -m_width / 2, m_length, m_width),
-                            m_roundness, m_roundness, Qt::RelativeSize);
+    painter.drawRoundedRect(
+        QRect(0, -m_lineWidth / 2, m_lineLength, m_lineWidth), m_roundness,
+        m_roundness, Qt::RelativeSize);
     painter.restore();
   }
 }
@@ -130,22 +133,22 @@ void QtWaitingSpinner::setNumberOfLines(int lines) {
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setLength(int length) {
-  m_length = length;
+void QtWaitingSpinner::setLineLength(int length) {
+  m_lineLength = length;
   updateSize();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setWidth(int width) {
-  m_width = width;
+void QtWaitingSpinner::setLineWidth(int width) {
+  m_lineWidth = width;
   updateSize();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setRadius(int radius) {
-  m_radius = radius;
+void QtWaitingSpinner::setInnerRadius(int radius) {
+  m_innerRadius = radius;
   updateSize();
 }
 
@@ -168,11 +171,15 @@ void QtWaitingSpinner::setSpeed(qreal speed) {
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setTrail(int trail) { m_trail = trail; }
+void QtWaitingSpinner::setTrailFadeFactor(int trail) {
+  m_trailFadeFactor = trail;
+}
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setOpacity(int minOpacity) { m_opacity = minOpacity; }
+void QtWaitingSpinner::setTrailOpacity(int minOpacity) {
+  m_trailOpacity = minOpacity;
+}
 
 /*----------------------------------------------------------------------------*/
 
@@ -187,14 +194,14 @@ void QtWaitingSpinner::rotate() {
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updateSize() {
-  int size = (m_radius + m_length) * 2;
+  int size = (m_innerRadius + m_lineLength) * 2;
   setFixedSize(size, size);
 }
 
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updateTimer() {
-  m_timer->setInterval(countTimeout(m_numberOfLines, m_speed));
+  m_timer->setInterval(calculateTimerInterval(m_numberOfLines, m_speed));
 }
 
 /*----------------------------------------------------------------------------*/
@@ -208,7 +215,7 @@ void QtWaitingSpinner::updatePosition() {
 
 /*----------------------------------------------------------------------------*/
 
-int QtWaitingSpinner::countTimeout(int lines, qreal speed) {
+int QtWaitingSpinner::calculateTimerInterval(int lines, qreal speed) {
   return 1000 / (lines * speed);
 }
 
@@ -224,8 +231,8 @@ int QtWaitingSpinner::lineDistance(int from, int to, int lines) {
 
 /*----------------------------------------------------------------------------*/
 
-QColor QtWaitingSpinner::countTrailColor(int distance, int lines, int trail,
-                                         int minOpacity, QColor color) {
+QColor QtWaitingSpinner::currentLineColor(int distance, int lines, int trail,
+                                          int minOpacity, QColor color) {
   if (distance == 0) {
     return color;
   }
@@ -239,7 +246,7 @@ QColor QtWaitingSpinner::countTrailColor(int distance, int lines, int trail,
   qreal gradation = alphaDiff / (qreal)(distanceThreshold + 1);
   qreal resultAlpha = color.alphaF() - gradation * distance;
 
-  // If alpha is out of bound, clip it.
+  // If alpha is out of bounds, clip it.
   resultAlpha = std::min(1.0, std::max(0.0, resultAlpha));
   color.setAlphaF(resultAlpha);
   return color;

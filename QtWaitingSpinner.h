@@ -47,11 +47,11 @@ public:
   void setRoundness(qreal roundness);
   void setSpeed(qreal speed);
   void setNumberOfLines(int lines);
-  void setLength(int length);
-  void setWidth(int width);
-  void setRadius(int radius);
-  void setTrail(int trail);
-  void setOpacity(int minOpacity);
+  void setLineLength(int length);
+  void setLineWidth(int width);
+  void setInnerRadius(int radius);
+  void setTrailFadeFactor(int trail);
+  void setTrailOpacity(int minOpacity);
 
 private Q_SLOTS:
   void rotate();
@@ -60,9 +60,9 @@ protected:
   void paintEvent(QPaintEvent *ev);
 
 private:
-  static int countTimeout(int lines, qreal speed);
+  static int calculateTimerInterval(int lines, qreal speed);
   static int lineDistance(int from, int to, int lines);
-  static QColor countTrailColor(int distance, int lines, int trail,
+  static QColor currentLineColor(int distance, int lines, int trail,
                                 int minOpacity, QColor color);
 
   void initialise();
@@ -76,11 +76,11 @@ private:
   qreal m_roundness; // 0..100
   qreal m_speed;     // in rounds per second
   int m_numberOfLines;
-  int m_length;
-  int m_width;
-  int m_radius;
-  int m_trail;
-  int m_opacity;
+  int m_lineLength;
+  int m_lineWidth;
+  int m_innerRadius;
+  int m_trailFadeFactor;
+  int m_trailOpacity;
 
 private:
   QTimer *m_timer;
