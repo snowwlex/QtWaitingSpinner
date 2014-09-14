@@ -8,7 +8,7 @@ Configuration
 
 Some spinners with different configurations: 
 
-![waiting spinner](waiting-spinners.gif)
+![waiting spinner](https://github.com/goblincoding/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
 
 The following configuration options are available:
 
