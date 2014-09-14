@@ -31,13 +31,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // Defaults
 const QColor c_color(Qt::black);
 const qreal c_roundness(70.0);
+const qreal c_minTrailOpacity(15.0);
 const int c_lines(12);
 const int c_lineLength(10);
 const int c_lineWidth(5);
 const int c_innerRadius(10);
 const int c_revPerSec(1);
 const int c_trailFadeFactor(70);
-const int c_trailOpacity(15);
 
 /*----------------------------------------------------------------------------*/
 
@@ -46,10 +46,11 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
     : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
 
       // Configurable settings.
-      m_color(c_color), m_roundness(c_roundness), m_revPerSec(c_revPerSec),
+      m_color(c_color), m_roundness(c_roundness),
+      m_minTrailOpacity(c_minTrailOpacity), m_revPerSec(c_revPerSec),
       m_numberOfLines(c_lines), m_lineLength(c_lineLength + c_lineWidth),
       m_lineWidth(c_lineWidth), m_innerRadius(c_innerRadius),
-      m_trailFadeFactor(c_trailFadeFactor), m_trailOpacity(c_trailOpacity),
+      m_trailFadeFactor(c_trailFadeFactor),
 
       // Other
       m_timer(NULL), m_parent(parent), m_centreOnParent(centreOnParent),
@@ -93,8 +94,9 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
     painter.translate(m_innerRadius, 0);
     int distance =
         lineCountDistanceFromPrimary(i, m_currentCounter, m_numberOfLines);
-    QColor color = currentLineColor(distance, m_numberOfLines,
-                                    m_trailFadeFactor, m_trailOpacity, m_color);
+    QColor color =
+        currentLineColor(distance, m_numberOfLines, m_trailFadeFactor,
+                         m_minTrailOpacity, m_color);
     painter.setBrush(color);
     // TODO improve the way rounded rect is painted
     painter.drawRoundedRect(
@@ -179,8 +181,8 @@ void QtWaitingSpinner::setTrailFadeFactor(int trail) {
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::setTrailOpacity(int minOpacity) {
-  m_trailOpacity = minOpacity;
+void QtWaitingSpinner::setMinimumTrailOpacity(qreal minOpacity) {
+  m_minTrailOpacity = minOpacity;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -235,19 +237,19 @@ int QtWaitingSpinner::lineCountDistanceFromPrimary(int current, int primary,
 /*----------------------------------------------------------------------------*/
 
 QColor QtWaitingSpinner::currentLineColor(int countDistance, int totalNrOfLines,
-                                          int trail, int minOpacity,
+                                          int trail, qreal minOpacity,
                                           QColor color) {
   if (countDistance == 0) {
     return color;
   }
-  const qreal minAlphaF = static_cast<qreal>(minOpacity) / 100.0;
+  const qreal minAlphaF = minOpacity / 100.0;
   int distanceThreshold =
       ceil((totalNrOfLines - 1) * static_cast<qreal>(trail) / 100.0);
   if (countDistance > distanceThreshold) {
     color.setAlphaF(minAlphaF);
     return color;
   }
-  qreal alphaDiff = color.alphaF() - static_cast<qreal>(minAlphaF);
+  qreal alphaDiff = color.alphaF() - minAlphaF;
   qreal gradient = alphaDiff / static_cast<qreal>(distanceThreshold + 1);
   qreal resultAlpha = color.alphaF() - gradient * countDistance;
 

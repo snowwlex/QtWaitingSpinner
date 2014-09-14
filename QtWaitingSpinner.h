@@ -51,7 +51,7 @@ public:
   void setLineWidth(int width);
   void setInnerRadius(int radius);
   void setTrailFadeFactor(int trail);
-  void setTrailOpacity(int minOpacity);
+  void setMinimumTrailOpacity(qreal minOpacity);
 
 private Q_SLOTS:
   void rotate();
@@ -64,7 +64,7 @@ private:
   static int lineCountDistanceFromPrimary(int current, int primary,
                                           int totalNrOfLines);
   static QColor currentLineColor(int distance, int totalNrOfLines, int trail,
-                                 int minOpacity, QColor color);
+                                 qreal minOpacity, QColor color);
 
   void initialise();
   void updateSize();
@@ -75,13 +75,13 @@ private:
   // Configurable settings.
   QColor m_color;
   qreal m_roundness; // 0..100
-  int m_revPerSec;   // revolutions per second
+  qreal m_minTrailOpacity;
+  int m_revPerSec; // revolutions per second
   int m_numberOfLines;
   int m_lineLength;
   int m_lineWidth;
   int m_innerRadius;
   int m_trailFadeFactor;
-  int m_trailOpacity;
 
 private:
   QTimer *m_timer;
