@@ -26,6 +26,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "QtWaitingSpinner.h"
 
+/*----------------------------------------------------------------------------*/
+
 // Defaults
 const QColor c_color(Qt::black);
 const qreal c_roundness(70.0);
@@ -36,6 +38,8 @@ const int c_radius(10);
 const int c_speed(1);
 const int c_trail(70);
 const int c_opacity(15);
+
+/*----------------------------------------------------------------------------*/
 
 QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
                                    bool centreOnParent)
@@ -52,6 +56,8 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
   this->setWindowModality(modality);
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::initialise() {
   myTimer = new QTimer(this);
   connect(myTimer, SIGNAL(timeout()), this, SLOT(rotate()));
@@ -59,6 +65,8 @@ void QtWaitingSpinner::initialise() {
   updateTimer();
   this->hide();
 }
+
+/*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
   QPainter painter(this);
@@ -86,6 +94,8 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
   }
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::start() {
   updatePosition();
   this->show();
@@ -95,6 +105,8 @@ void QtWaitingSpinner::start() {
   }
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::finish() {
   this->hide();
   if (myTimer->isActive()) {
@@ -103,41 +115,61 @@ void QtWaitingSpinner::finish() {
   }
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setLinesNumber(int linesNumber) {
   myLinesNumber = linesNumber;
   myCurrentCounter = 0;
   updateTimer();
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setLength(int length) {
   myLength = length;
   updateSize();
 }
+
+/*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setWidth(int width) {
   myWidth = width;
   updateSize();
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setRadius(int radius) {
   myRadius = radius;
   updateSize();
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setRoundness(qreal roundness) {
   myRoundness = std::max(0.0, std::min(100.0, roundness));
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setColor(QColor color) { myColor = color; }
+
+/*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::setSpeed(qreal speed) {
   mySpeed = speed;
   updateTimer();
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setTrail(int trail) { myTrail = trail; }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::setOpacity(int minOpacity) { myOpacity = minOpacity; }
+
+/*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::rotate() {
   ++myCurrentCounter;
@@ -147,14 +179,20 @@ void QtWaitingSpinner::rotate() {
   update();
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::updateSize() {
   int size = (myRadius + myLength) * 2;
   setFixedSize(size, size);
 }
 
+/*----------------------------------------------------------------------------*/
+
 void QtWaitingSpinner::updateTimer() {
   myTimer->setInterval(countTimeout(myLinesNumber, mySpeed));
 }
+
+/*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::updatePosition() {
   if (myParent && myCentreOnParent) {
@@ -163,9 +201,13 @@ void QtWaitingSpinner::updatePosition() {
   }
 }
 
+/*----------------------------------------------------------------------------*/
+
 int QtWaitingSpinner::countTimeout(int lines, qreal speed) {
   return 1000 / (lines * speed);
 }
+
+/*----------------------------------------------------------------------------*/
 
 int QtWaitingSpinner::lineDistance(int from, int to, int lines) {
   int result = to - from;
@@ -174,6 +216,8 @@ int QtWaitingSpinner::lineDistance(int from, int to, int lines) {
   }
   return result;
 }
+
+/*----------------------------------------------------------------------------*/
 
 QColor QtWaitingSpinner::countTrailColor(int distance, int lines, int trail,
                                          int minOpacity, QColor color) {
@@ -189,10 +233,11 @@ QColor QtWaitingSpinner::countTrailColor(int distance, int lines, int trail,
   qreal alphaDiff = color.alphaF() - (qreal)minAlphaF;
   qreal gradation = alphaDiff / (qreal)(distanceThreshold + 1);
   qreal resultAlpha = color.alphaF() - gradation * distance;
-  resultAlpha = std::min(
-      1.0,
-      std::max(0.0,
-               resultAlpha)); // if alpha is out of bound, force it to bounds
+
+  // If alpha is out of bound, clip it.
+  resultAlpha = std::min(1.0, std::max(0.0, resultAlpha));
   color.setAlphaF(resultAlpha);
   return color;
 }
+
+/*----------------------------------------------------------------------------*/
