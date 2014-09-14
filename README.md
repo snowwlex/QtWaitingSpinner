@@ -3,8 +3,7 @@ QtWaitingSpinner
 
 QtWaitingSpinner is a configurable custom Qt widget for showing a "waiting" or "loading" spinner icon.
 
-Configuration
-================
+###Configuration
 
 Some spinners with different configurations: 
 
@@ -13,17 +12,16 @@ Some spinners with different configurations:
 The following configuration options are available:
 
 * Colour
-* "Roundness"
+* "Roundness" of the lines
 * Speed (rotations per second)
-* The number of radial lines to be drawn
-* The length of the radial lines
-* The width of the widget
-* The radius of the widget
-* The length of the "trail" or "fade"
-* Opacity
+* Number of lines to be drawn
+* Line length
+* Line width
+* Radius of the spinner's "dead space" or inner circle
+* The percentage fade the "trail"
+* The minimum opacity of the "trail"
 
-Usage
-==========
+###Usage
 
 Despite being highly configurable, QtWaitingSpinner is extremely easy to use and the defaults generally do a pretty good job.
 
@@ -36,7 +34,6 @@ The example below will create a spinner that (1) blocks all user input to the ma
 
 (the configuration options mentioned above can be set via the various mutators)
 
-Thanks
-======
+###Thanks
 
 QtWaitingSpinner was inspired by the [spin.js](http://fgnass.github.io/spin.js/)  project.
