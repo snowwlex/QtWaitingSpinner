@@ -36,7 +36,7 @@ const int c_speed(1);
 const int c_trail(70);
 const int c_opacity(15);
 
-QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowFlags flags) : QWidget(parent, flags),
+QtWaitingSpinner::QtWaitingSpinner(QWidget* parent, Qt::WindowModality modality, bool centreOnParent) : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
     myLinesNumber(c_lines),
     myLength(c_length + c_width),
     myWidth(c_width),
@@ -47,25 +47,16 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowFlags flags) : QWi
     myTrail(c_trail),
     myOpacity(c_opacity),
     myTimer(NULL),
-    myCurrentCounter(0)
+    myParent(parent),
+    myCurrentCounter(0),
+    myCentreOnParent(centreOnParent)
 {
     initialise();
-}
 
-QtWaitingSpinner::QtWaitingSpinner(int linesNumber, int length, int width, int radius, QWidget *parent) : QWidget(parent),
-	myLinesNumber(linesNumber),
-	myLength(length + width),
-	myWidth(width),
-	myRadius(radius),
-    myRoundness(c_roundness),
-    myColor(c_color),
-    mySpeed(c_speed),
-    myTrail(c_trail),
-    myOpacity(c_opacity),
-    myTimer(NULL),
-    myCurrentCounter(0)
-{
-    initialise();
+    // We need to set the window modality AFTER we've hidden the
+    // widget for the first time since changing this property while
+    // the widget is visible has no effect.
+    this->setWindowModality(modality);
 }
 
 void QtWaitingSpinner::initialise() {
@@ -101,6 +92,7 @@ void QtWaitingSpinner::paintEvent(QPaintEvent */*ev*/) {
 }
 
 void QtWaitingSpinner::start() {
+    updatePosition();
 	this->show();
 	if (!myTimer->isActive()) {
 		myTimer->start();
@@ -172,7 +164,14 @@ void QtWaitingSpinner::updateSize() {
 }
 
 void QtWaitingSpinner::updateTimer() {
-	myTimer->setInterval(countTimeout(myLinesNumber, mySpeed));
+  myTimer->setInterval(countTimeout(myLinesNumber, mySpeed));
+}
+
+void QtWaitingSpinner::updatePosition() {
+  if(myParent && myCentreOnParent) {
+    this->move(myParent->frameGeometry().topLeft() +
+               myParent->rect().center() - this->rect().center());
+  }
 }
 
 int QtWaitingSpinner::countTimeout(int lines, qreal speed) {

@@ -35,8 +35,7 @@ class QtWaitingSpinner : public QWidget {
 	Q_OBJECT
 
 public:
-    QtWaitingSpinner(QWidget *parent = 0, Qt::WindowFlags flags = 0);
-    QtWaitingSpinner(int linesNumber = 12, int length = 7, int width = 5, int radius = 10, QWidget *parent = 0);
+    QtWaitingSpinner(QWidget* parent, Qt::WindowModality modality, bool centreOnParent);
 
 public Q_SLOTS:
 	void start();
@@ -54,9 +53,7 @@ public:
 	void setOpacity(int minOpacity);
 
 private Q_SLOTS:
-	void rotate();
-	void updateSize();
-	void updateTimer();
+    void rotate();
 
 protected:
 	void paintEvent(QPaintEvent *ev);
@@ -67,6 +64,9 @@ private:
 	static QColor countTrailColor(int distance, int lines, int trail, int minOpacity, QColor color);
 
     void initialise();
+    void updateSize();
+    void updateTimer();
+    void updatePosition();
 
 private:
 	int myLinesNumber;
@@ -79,8 +79,11 @@ private:
 	int myTrail;
 	int myOpacity;
 
+    bool myCentreOnParent;
+
 private:
 	QTimer *myTimer;
+    QWidget *myParent;
 	int myCurrentCounter;
 };
 
