@@ -87,7 +87,8 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
     painter.save();
     painter.translate(m_innerRadius + m_lineLength,
                       m_innerRadius + m_lineLength);
-    qreal rotateAngle = (qreal)360 * qreal(i) / qreal(m_numberOfLines);
+    qreal rotateAngle =
+        static_cast<qreal>(360 * i) / static_cast<qreal>(m_numberOfLines);
     painter.rotate(rotateAngle);
     painter.translate(m_innerRadius, 0);
     int distance =
@@ -239,14 +240,15 @@ QColor QtWaitingSpinner::currentLineColor(int countDistance, int totalNrOfLines,
   if (countDistance == 0) {
     return color;
   }
-  const qreal minAlphaF = (qreal)minOpacity / 100;
-  int distanceThreshold = ceil((totalNrOfLines - 1) * (qreal)trail / 100);
+  const qreal minAlphaF = static_cast<qreal>(minOpacity) / 100.0;
+  int distanceThreshold =
+      ceil((totalNrOfLines - 1) * static_cast<qreal>(trail) / 100.0);
   if (countDistance > distanceThreshold) {
     color.setAlphaF(minAlphaF);
     return color;
   }
-  qreal alphaDiff = color.alphaF() - (qreal)minAlphaF;
-  qreal gradient = alphaDiff / (qreal)(distanceThreshold + 1);
+  qreal alphaDiff = color.alphaF() - static_cast<qreal>(minAlphaF);
+  qreal gradient = alphaDiff / static_cast<qreal>(distanceThreshold + 1);
   qreal resultAlpha = color.alphaF() - gradient * countDistance;
 
   // If alpha is out of bounds, clip it.
