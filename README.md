@@ -8,7 +8,7 @@ Configuration
 
 Some spinners with different configurations: 
 
-![waiting spinner](gh-pages/waiting-spinners.gif)
+![waiting spinner](waiting-spinners.gif)
 
 The following configuration options are available:
 
