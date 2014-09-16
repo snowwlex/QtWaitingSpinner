@@ -41,7 +41,25 @@ const int c_revPerSec(1);
 
 /*----------------------------------------------------------------------------*/
 
-QtWaitingSpinner::QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
+QtWaitingSpinner::QtWaitingSpinner(QWidget *parent)
+    : QWidget(parent),
+
+      // Configurable settings.
+      m_color(c_color), m_roundness(c_roundness),
+      m_minTrailOpacity(c_minTrailOpacity),
+      m_trailFadePercentage(c_trailFadePercentage), m_revPerSec(c_revPerSec),
+      m_numberOfLines(c_lines), m_lineLength(c_lineLength + c_lineWidth),
+      m_lineWidth(c_lineWidth), m_innerRadius(c_innerRadius),
+
+      // Other
+      m_timer(NULL), m_parent(parent), m_centreOnParent(false),
+      m_currentCounter(0) {
+  initialise();
+}
+
+/*----------------------------------------------------------------------------*/
+
+QtWaitingSpinner::QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent,
                                    bool centreOnParent)
     : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
 
