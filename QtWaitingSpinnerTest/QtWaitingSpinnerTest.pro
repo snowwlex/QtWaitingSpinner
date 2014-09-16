@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    ../QtWaitingSpinner.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    ../QtWaitingSpinner.h
 
 FORMS    += mainwindow.ui
