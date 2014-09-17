@@ -23,16 +23,14 @@ The following configuration options are available:
 
 ###Usage
 
-Despite being highly configurable, QtWaitingSpinner is extremely easy to use and the defaults generally do a pretty good job.
+Despite being highly configurable, "QtWaitingSpinner" is extremely easy to use and, to make things even easier, "QtWaitingSpinnerTest" can assist you in determining the exact shape, size and colour configuration you'd like your spinner to have.
 
-The example below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default settings.
+As an easy reference example, the code below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default shape, size and colour settings.
 
 ```
 	QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
 	spinner->start(); // starts spinning
 ```
-
-(the configuration options mentioned above can be set via the various mutators)
 
 ###Thanks
 
