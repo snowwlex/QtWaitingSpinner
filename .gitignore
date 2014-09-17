@@ -21,3 +21,5 @@ Makefile
 
 QtWaitingSpinner
 QtWaitingSpinner.exe
+build-QtWaitingSpinnerTest-Desktop-Debug*
+build-QtWaitingSpinnerTest-GCC-Debug*

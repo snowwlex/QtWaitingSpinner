@@ -35,12 +35,21 @@ class QTimer;
 class QtWaitingSpinner : public QWidget {
   Q_OBJECT
 public:
-  explicit QtWaitingSpinner(QWidget *parent, Qt::WindowModality modality,
-                            bool centreOnParent);
+  /*! Constructor for "standard" widget behaviour - use this
+   * constructor if you wish to, e.g. embed your widget in another. */
+  QtWaitingSpinner(QWidget *parent = 0);
+
+  /*! Constructor - use this constructor to automatically create a modal
+   * ("blocking") spinner on top of the calling widget/window.  If a valid
+   * parent widget is provided, "centreOnParent" will ensure that
+   * QtWaitingSpinner automatically centres itself on it, if not,
+   * "centreOnParent" is ignored. */
+  QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent = 0,
+                   bool centreOnParent = true);
 
 public Q_SLOTS:
   void start();
-  void finish();
+  void stop();
 
 public:
   void setColor(QColor color);
@@ -85,6 +94,9 @@ private:
   int m_innerRadius;
 
 private:
+  QtWaitingSpinner(const QtWaitingSpinner&);
+  QtWaitingSpinner& operator=(const QtWaitingSpinner&);
+
   QTimer *m_timer;
   QWidget *m_parent;
   bool m_centreOnParent;
