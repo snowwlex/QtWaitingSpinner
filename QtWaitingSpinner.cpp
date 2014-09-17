@@ -79,6 +79,7 @@ QtWaitingSpinner::QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent,
   // widget for the first time since changing this property while
   // the widget is visible has no effect.
   this->setWindowModality(modality);
+  this->setAttribute(Qt::WA_TranslucentBackground);
 }
 
 /*----------------------------------------------------------------------------*/
