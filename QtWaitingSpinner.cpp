@@ -137,7 +137,7 @@ void QtWaitingSpinner::start() {
 
 /*----------------------------------------------------------------------------*/
 
-void QtWaitingSpinner::finish() {
+void QtWaitingSpinner::stop() {
   this->hide();
   if (m_timer->isActive()) {
     m_timer->stop();

@@ -49,7 +49,7 @@ public:
 
 public Q_SLOTS:
   void start();
-  void finish();
+  void stop();
 
 public:
   void setColor(QColor color);
