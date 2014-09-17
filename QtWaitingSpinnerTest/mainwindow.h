@@ -17,6 +17,9 @@ public:
   ~MainWindow();
 
 private slots:
+  void showColourDialog();
+  void launchBlockingSpinner();
+
   void setColor(QColor color);
   void setRoundness(double roundness);
   void setMinimumTrailOpacity(double minOpacity);
@@ -29,7 +32,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
-  QtWaitingSpinner* m_spinner;
+  QtWaitingSpinner *m_spinner;
 };
 
 #endif // MAINWINDOW_H
