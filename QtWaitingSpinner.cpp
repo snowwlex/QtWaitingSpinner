@@ -21,8 +21,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <cmath>
 #include <algorithm>
 
-#include <QtGui/QPainter>
-#include <QtCore/QTimer>
+#include <QPainter>
+#include <QTimer>
 
 #include "QtWaitingSpinner.h"
 
