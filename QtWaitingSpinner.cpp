@@ -53,7 +53,7 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent)
 
       // Other
       m_timer(NULL), m_parent(parent), m_centreOnParent(false),
-      m_currentCounter(0) {
+      m_currentCounter(0), m_isSpinning(false) {
   initialise();
 }
 
@@ -129,6 +129,7 @@ void QtWaitingSpinner::paintEvent(QPaintEvent * /*ev*/) {
 
 void QtWaitingSpinner::start() {
   updatePosition();
+  m_isSpinning = true;
   this->show();
   if (!m_timer->isActive()) {
     m_timer->start();
@@ -139,6 +140,7 @@ void QtWaitingSpinner::start() {
 /*----------------------------------------------------------------------------*/
 
 void QtWaitingSpinner::stop() {
+  m_isSpinning = false;
   this->hide();
   if (m_timer->isActive()) {
     m_timer->stop();
@@ -174,6 +176,10 @@ void QtWaitingSpinner::setInnerRadius(int radius) {
   m_innerRadius = radius;
   updateSize();
 }
+
+/*----------------------------------------------------------------------------*/
+
+bool QtWaitingSpinner::isSpinning() const { return m_isSpinning; }
 
 /*----------------------------------------------------------------------------*/
 

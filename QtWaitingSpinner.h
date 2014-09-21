@@ -56,6 +56,8 @@ public:
   void setLineWidth(int width);
   void setInnerRadius(int radius);
 
+  bool isSpinning() const;
+
 private Q_SLOTS:
   void rotate();
 
@@ -95,6 +97,7 @@ private:
   QWidget *m_parent;
   bool m_centreOnParent;
   int m_currentCounter;
+  bool m_isSpinning;
 };
 
 #endif // QTWAITINGSPINNER_H

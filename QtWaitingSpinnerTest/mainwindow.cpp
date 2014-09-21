@@ -43,13 +43,25 @@ void MainWindow::showColourDialog() {
 /*----------------------------------------------------------------------------*/
 
 void MainWindow::launchBlockingSpinner() {
+  const int ms = 5000; // 5 seconds
+
+  /* Stop the "permanent" spinner, it just looks messy when
+   * both are running at the same time. */
+  bool isSpinning = m_spinner->isSpinning();
+
+  if (isSpinning) {
+    m_spinner->stop();
+    QTimer::singleShot(ms, m_spinner, SLOT(start()));
+  }
+
   QtWaitingSpinner *blockingSpinner =
       new QtWaitingSpinner(Qt::ApplicationModal, this, true);
+  blockingSpinner->setColor(Qt::red);
   blockingSpinner->start();
 
-  /* Stop and kill after 5 seconds. */
-  QTimer::singleShot(5000, blockingSpinner, SLOT(stop()));
-  QTimer::singleShot(5000, blockingSpinner, SLOT(deleteLater()));
+  /* Stop and kill after ms elapsed. */
+  QTimer::singleShot(ms, blockingSpinner, SLOT(stop()));
+  QTimer::singleShot(ms, blockingSpinner, SLOT(deleteLater()));
 }
 
 /*----------------------------------------------------------------------------*/

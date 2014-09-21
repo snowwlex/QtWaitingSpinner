@@ -275,9 +275,6 @@
      </layout>
     </item>
    </layout>
-   <zorder></zorder>
-   <zorder>verticalSpacer</zorder>
-   <zorder></zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
