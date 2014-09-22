@@ -1,7 +1,7 @@
 #include <cmath>
 #include <algorithm>
 
-#include <QtGui/QPainter>
+#include <QPainter>
 
 #include "QtWaitingSpinner.h"
 

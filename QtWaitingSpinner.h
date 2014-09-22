@@ -1,10 +1,10 @@
 #ifndef QTWAITINGSPINNER_H
 #define QTWAITINGSPINNER_H
 
-#include <QtCore/QTimer>
+#include <QWidget>
 
-#include <QtGui/QWidget>
-#include <QtGui/QColor>
+#include <QTimer>
+#include <QColor>
 
 class QtWaitingSpinner : public QWidget {
 	Q_OBJECT
