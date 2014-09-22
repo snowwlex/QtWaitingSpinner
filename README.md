@@ -1,61 +1,37 @@
 QtWaitingSpinner
 ================
 
-This is configurable custom Qt widget for showing waiting spinner icon. If you're looking for somewhat like loading icon, implemented as Qt widget, you're in the right place.
+QtWaitingSpinner is a configurable custom Qt widget for showing a "waiting" or "loading" spinner icon.
 
-How does it look?
-=============
+###Configuration
 
-Some spinners with different parameters: 
+Some spinners with different configurations: 
 
-![waiting spinner](https://raw.github.com/snowwlex/QtWaitingSpinner/gh-pages/waiting-spinners.gif)
+![waiting spinner](https://github.com/goblincoding/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
 
-Configuration
-================
+The following configuration options are available:
 
-Following parameters can be used for configuration:
+* Colour
+* "Roundness" of the lines
+* Speed (rotations per second)
+* Number of lines to be drawn
+* Line length
+* Line width
+* Radius of the spinner's "dead space" or inner circle
+* The percentage fade the "trail"
+* The minimum opacity of the "trail"
 
-*   Main
-  *   Number of lines
-  *   Length of lines
-  *   Width of lines
-  *   Radius of circle
-*   Additional 
-  *   "Roundness" 
-  *   Color 
-  *   Speed (in rounds per second)
-  *   "Trail" parameter
-  *   Opacity
-  
-Code usage
-==========
+###Usage
 
-Minimum code that is needed to write for using spinner:
+Despite being highly configurable, "QtWaitingSpinner" is extremely easy to use and, to make things even easier, "QtWaitingSpinnerTest" can assist you in determining the exact shape, size and colour configuration you'd like your spinner to have.
+
+As an easy reference example, the code below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default shape, size and colour settings.
+
 ```
-	QtWaitingSpinner* spinner = new QtWaitingSpinner(10,7,3,5);
+	QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
 	spinner->start(); // starts spinning
 ```
 
-Main parameters are setted in constructor. This is a widget, that can be placed anywhere.
+###Thanks
 
-Main and additional parameters can be setted like that:
-```
-  spinner->setLinesNumber(10);
-  spinner->setSpeed(1.5);
-  spinner->setColor(QColor(255,0,0));
-```
-
-For example:
-```
-	QVBoxLayout *layout = new QVBoxLayout;
-	QtWaitingSpinner* spinner = new QtWaitingSpinner(10,7,3,5);
-	spinner->setSpeed(1.5);
-	layout->addWidget(spinner);
-	setLayout(layout);
-	spinner->start();
-```
-
-Thanks
-======
-
-The spinner is inspired by [spin.js](http://fgnass.github.io/spin.js/)  project. 
+QtWaitingSpinner was inspired by the [spin.js](http://fgnass.github.io/spin.js/)  project.
