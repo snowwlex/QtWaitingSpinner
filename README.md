@@ -47,6 +47,7 @@ Parameters like on screenshot above should be coded like that:
   spinner->setLineWidth(5);
   spinner->setInnerRadius(10);
   spinner->setRevolutionsPerSecond(1);
+  spinner->setColor(QColor(81, 4, 71));
 
   spinner->start(); //show must go on!
 
