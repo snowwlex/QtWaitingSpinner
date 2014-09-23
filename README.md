@@ -7,7 +7,7 @@ QtWaitingSpinner is a configurable custom Qt widget for showing a "waiting" or "
 
 Some spinners with different configurations: 
 
-![waiting spinner](https://github.com/snowwlex/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
+![waiting spinner](https://github.com/goblincoding/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
 
 The following configuration options are available:
 
@@ -25,19 +25,10 @@ The following configuration options are available:
 
 Despite being highly configurable, "QtWaitingSpinner" is extremely easy to use and, to make things even easier, "QtWaitingSpinnerTest" can assist you in determining the exact shape, size and colour configuration you'd like your spinner to have.
 
-![test dialog](https://github.com/snowwlex/QtWaitingSpinner/blob/gh-pages/test-dialog.png)
-
-As an easy reference example, the code below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default shape, size and colour settings.
+For example, the embedded spinner that follows can be created as follows:
 
 ```
-	QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
-	spinner->start(); // starts spinning
-```
-
-Parameters like on screenshot above should be coded like that:
-
-```
-  QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
+  QtWaitingSpinner* spinner = new QtWaitingSpinner(this);
 
   spinner->setRoundness(70.0);
   spinner->setMinimumTrailOpacity(15.0);
@@ -49,8 +40,17 @@ Parameters like on screenshot above should be coded like that:
   spinner->setRevolutionsPerSecond(1);
   spinner->setColor(QColor(81, 4, 71));
 
-  spinner->start(); //show must go on!
+  spinner->start(); // gets the show on the road!
 
+```
+
+![test dialog](https://github.com/goblincoding/QtWaitingSpinner/blob/gh-pages/test-dialog.png)
+
+Alternatively, the code below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default shape, size and colour settings.
+
+```
+	QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
+	spinner->start(); // starts spinning
 ```
 
 
