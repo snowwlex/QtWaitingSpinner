@@ -25,7 +25,7 @@ The following configuration options are available:
 
 Despite being highly configurable, "QtWaitingSpinner" is extremely easy to use and, to make things even easier, "QtWaitingSpinnerTest" can assist you in determining the exact shape, size and colour configuration you'd like your spinner to have.
 
-For example, the embedded spinner that follows can be created as follows:
+For example, the embedded spinner in the QtWaitingSpinnerTest screenshot below can be created as follows:
 
 ```
   QtWaitingSpinner* spinner = new QtWaitingSpinner(this);
