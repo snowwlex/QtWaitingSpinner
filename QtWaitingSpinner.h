@@ -22,9 +22,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define QTWAITINGSPINNER_H
 
 #include <QWidget>
-
-#include <QTimer>
 #include <QColor>
+
+class QTimer;
 
 class QtWaitingSpinner : public QWidget {
   Q_OBJECT
@@ -95,8 +95,8 @@ private:
 
   QTimer *m_timer;
   QWidget *m_parent;
-  bool m_centreOnParent;
   int m_currentCounter;
+  bool m_centreOnParent;
   bool m_isSpinning;
 };
 
