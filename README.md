@@ -3,7 +3,7 @@ QtWaitingSpinner
 
 QtWaitingSpinner is a highly configurable, custom Qt widget for showing "waiting" or "loading" spinner icons in Qt applications, e.g. the spinners below are all QtWaitingSpinner widgets differing only in their configuration:
 
-![waiting spinner](https://github.com/goblincoding/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
+![waiting spinner](https://github.com/snowwlex/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
 
 ###Configuration
 
@@ -42,7 +42,7 @@ For example, the embedded spinner in the QtWaitingSpinnerTest screenshot below c
 
 ```
 
-![test dialog](https://github.com/goblincoding/QtWaitingSpinner/blob/gh-pages/test-dialog.png)
+![test dialog](https://github.com/snowwlex/QtWaitingSpinner/blob/gh-pages/test-dialog.png)
 
 As an alternative example, the code below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default shape, size and colour settings.
 
