@@ -52,8 +52,8 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget *parent)
       m_lineWidth(c_lineWidth), m_innerRadius(c_innerRadius),
 
       // Other
-      m_timer(NULL), m_parent(parent), m_currentCounter(0),
-      m_centreOnParent(false), m_isSpinning(false) {
+      m_timer(NULL), m_parent(parent), m_centreOnParent(false),
+      m_currentCounter(0), m_isSpinning(false) {
   initialise();
 }
 
@@ -71,8 +71,8 @@ QtWaitingSpinner::QtWaitingSpinner(Qt::WindowModality modality, QWidget *parent,
       m_lineWidth(c_lineWidth), m_innerRadius(c_innerRadius),
 
       // Other
-      m_timer(NULL), m_parent(parent), m_currentCounter(0),
-      m_centreOnParent(centreOnParent), m_isSpinning(false) {
+      m_timer(NULL), m_parent(parent), m_centreOnParent(centreOnParent),
+      m_currentCounter(0) {
   initialise();
 
   // We need to set the window modality AFTER we've hidden the
