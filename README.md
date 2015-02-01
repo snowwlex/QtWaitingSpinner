@@ -55,6 +55,11 @@ Please use [use this link](https://github.com/goblincoding/QtWaitingSpinner/issu
 
 Enjoy!
 
+###qt-pods
+
+QtWaitingSpinner is available as a pod within qt-pods. See here for reference:
+https://github.com/cybercatalyst/qt-pods
+
 ###Thanks
 
 QtWaitingSpinner was inspired by the [spin.js](http://fgnass.github.io/spin.js/)  project.
