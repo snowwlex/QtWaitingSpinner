@@ -99,6 +99,7 @@ void WaitingSpinnerWidget::initialize() {
 }
 
 void WaitingSpinnerWidget::paintEvent(QPaintEvent *) {
+    updatePosition();
     QPainter painter(this);
     painter.fillRect(this->rect(), Qt::transparent);
     painter.setRenderHint(QPainter::Antialiasing, true);
