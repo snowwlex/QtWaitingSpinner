@@ -31,7 +31,7 @@ class WaitingSpinnerWidget : public QWidget {
 public:
     /*! Constructor for "standard" widget behaviour - use this
    * constructor if you wish to, e.g. embed your widget in another. */
-    WaitingSpinnerWidget(QWidget *parent = 0);
+    WaitingSpinnerWidget(QWidget *parent = 0, bool centerOnParent = true);
 
     /*! Constructor - use this constructor to automatically create a modal
    * ("blocking") spinner on top of the calling widget/window.  If a valid
@@ -39,7 +39,7 @@ public:
    * QtWaitingSpinner automatically centres itself on it, if not,
    * "centreOnParent" is ignored. */
     WaitingSpinnerWidget(Qt::WindowModality modality, QWidget *parent = 0,
-                         bool centreOnParent = true);
+                         bool centerOnParent = true);
 
 public slots:
     void start();
@@ -48,9 +48,9 @@ public slots:
 public:
     void setColor(QColor color);
     void setRoundness(qreal roundness);
-    void setMinimumTrailOpacity(qreal minOpacity);
+    void setMinimumTrailOpacity(qreal minimumTrailOpacity);
     void setTrailFadePercentage(qreal trail);
-    void setRevolutionsPerSecond(int rps);
+    void setRevolutionsPerSecond(int revolutionsPerSecond);
     void setNumberOfLines(int lines);
     void setLineLength(int length);
     void setLineWidth(int width);
@@ -72,7 +72,7 @@ private:
                                    qreal trailFadePerc, qreal minOpacity,
                                    QColor color);
 
-    void initialise();
+    void initialize();
     void updateSize();
     void updateTimer();
     void updatePosition();

@@ -31,56 +31,57 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <QPainter>
 #include <QTimer>
 
-const QColor c_color(Qt::black);
-const qreal c_roundness(70.0);
-const qreal c_minTrailOpacity(15.0);
-const qreal c_trailFadePercentage(70.0);
-const int c_lines(12);
-const int c_lineLength(10);
-const int c_lineWidth(5);
-const int c_innerRadius(10);
-const int c_revPerSec(1);
+const QColor    defaultColor(Qt::black);
+const qreal     defaultRoundness(70.0);
+const qreal     defaultMinmumTrailOpacity(15.0);
+const qreal     defaultTrailFadePercentage(70.0);
+const int       defaultNumberOfLines(12);
+const int       defaultLineLength(10);
+const int       defaultLineWidth(5);
+const int       defaultInnerRadius(10);
+const int       defaultRevolutionsPerSecond(1);
 
-WaitingSpinnerWidget::WaitingSpinnerWidget(QWidget *parent)
-    : QWidget(parent),
-      _color(c_color),
-      _roundness(c_roundness),
-      _minimumTrailOpacity(c_minTrailOpacity),
-      _trailFadePercentage(c_trailFadePercentage),
-      _revolutionsPerSecond(c_revPerSec),
-      _numberOfLines(c_lines),
-      _lineLength(c_lineLength + c_lineWidth),
-      _lineWidth(c_lineWidth),
-      _innerRadius(c_innerRadius),
+WaitingSpinnerWidget::WaitingSpinnerWidget(QWidget *parent,
+                                           bool centerOnParent)
+    : QWidget               (parent),
+      _color                (defaultColor),
+      _roundness            (defaultRoundness),
+      _minimumTrailOpacity  (defaultMinmumTrailOpacity),
+      _trailFadePercentage  (defaultTrailFadePercentage),
+      _revolutionsPerSecond (defaultRevolutionsPerSecond),
+      _numberOfLines        (defaultNumberOfLines),
+      _lineLength           (defaultLineLength + defaultLineWidth),
+      _lineWidth            (defaultLineWidth),
+      _innerRadius          (defaultInnerRadius),
 
       // Other
-      _timer(NULL),
-      _centerOnParent(false),
-      _currentCounter(0),
-      _isSpinning(false) {
-    initialise();
+      _timer                (0),
+      _centerOnParent       (centerOnParent),
+      _currentCounter       (0),
+      _isSpinning           (false) {
+    initialize();
 }
 
 WaitingSpinnerWidget::WaitingSpinnerWidget(Qt::WindowModality modality,
                                            QWidget *parent,
-                                           bool centreOnParent)
+                                           bool centerOnParent)
     : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
-
-      _color(c_color),
-      _roundness(c_roundness),
-      _minimumTrailOpacity(c_minTrailOpacity),
-      _trailFadePercentage(c_trailFadePercentage),
-      _revolutionsPerSecond(c_revPerSec),
-      _numberOfLines(c_lines),
-      _lineLength(c_lineLength + c_lineWidth),
-      _lineWidth(c_lineWidth),
-      _innerRadius(c_innerRadius),
+      _color                (defaultColor),
+      _roundness            (defaultRoundness),
+      _minimumTrailOpacity  (defaultMinmumTrailOpacity),
+      _trailFadePercentage  (defaultTrailFadePercentage),
+      _revolutionsPerSecond (defaultRevolutionsPerSecond),
+      _numberOfLines        (defaultNumberOfLines),
+      _lineLength           (defaultLineLength + defaultLineWidth),
+      _lineWidth            (defaultLineWidth),
+      _innerRadius          (defaultInnerRadius),
 
       // Other
-      _timer(NULL),
-      _centerOnParent(centreOnParent),
-      _currentCounter(0) {
-    initialise();
+      _timer                (0),
+      _centerOnParent       (centerOnParent),
+      _currentCounter       (0),
+      _isSpinning           (false) {
+    initialize();
 
     // We need to set the window modality AFTER we've hidden the
     // widget for the first time since changing this property while
@@ -89,12 +90,12 @@ WaitingSpinnerWidget::WaitingSpinnerWidget(Qt::WindowModality modality,
     this->setAttribute(Qt::WA_TranslucentBackground);
 }
 
-void WaitingSpinnerWidget::initialise() {
+void WaitingSpinnerWidget::initialize() {
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(rotate()));
     updateSize();
     updateTimer();
-    this->hide();
+    setVisible(false);
 }
 
 void WaitingSpinnerWidget::paintEvent(QPaintEvent *) {
@@ -132,7 +133,7 @@ void WaitingSpinnerWidget::paintEvent(QPaintEvent *) {
 void WaitingSpinnerWidget::start() {
     updatePosition();
     _isSpinning = true;
-    this->show();
+    show();
     if (!_timer->isActive()) {
         _timer->start();
         _currentCounter = 0;
@@ -141,7 +142,7 @@ void WaitingSpinnerWidget::start() {
 
 void WaitingSpinnerWidget::stop() {
     _isSpinning = false;
-    this->hide();
+    hide();
     if (_timer->isActive()) {
         _timer->stop();
         _currentCounter = 0;
@@ -181,8 +182,8 @@ void WaitingSpinnerWidget::setColor(QColor color) {
     _color = color;
 }
 
-void WaitingSpinnerWidget::setRevolutionsPerSecond(int rps) {
-    _revolutionsPerSecond = rps;
+void WaitingSpinnerWidget::setRevolutionsPerSecond(int revolutionsPerSecond) {
+    _revolutionsPerSecond = revolutionsPerSecond;
     updateTimer();
 }
 
@@ -190,8 +191,8 @@ void WaitingSpinnerWidget::setTrailFadePercentage(qreal trail) {
     _trailFadePercentage = trail;
 }
 
-void WaitingSpinnerWidget::setMinimumTrailOpacity(qreal minOpacity) {
-    _minimumTrailOpacity = minOpacity;
+void WaitingSpinnerWidget::setMinimumTrailOpacity(qreal minimumTrailOpacity) {
+    _minimumTrailOpacity = minimumTrailOpacity;
 }
 
 void WaitingSpinnerWidget::rotate() {
@@ -213,7 +214,8 @@ void WaitingSpinnerWidget::updateTimer() {
 
 void WaitingSpinnerWidget::updatePosition() {
     if (parentWidget() && _centerOnParent) {
-        move(parentWidget()->frameGeometry().topLeft() + parentWidget()->rect().center() - rect().center());
+        move(parentWidget()->width() / 2 - width() / 2,
+             parentWidget()->height() / 2 - height() / 2);
     }
 }
 
