@@ -42,7 +42,8 @@ const int       defaultInnerRadius(10);
 const int       defaultRevolutionsPerSecond(1);
 
 WaitingSpinnerWidget::WaitingSpinnerWidget(QWidget *parent,
-                                           bool centerOnParent)
+                                           bool centerOnParent,
+                                           bool disableParentWhenSpinning)
     : QWidget               (parent),
       _color                (defaultColor),
       _roundness            (defaultRoundness),
@@ -57,6 +58,7 @@ WaitingSpinnerWidget::WaitingSpinnerWidget(QWidget *parent,
       // Other
       _timer                (0),
       _centerOnParent       (centerOnParent),
+      _disableParentWhenSpinning(disableParentWhenSpinning),
       _currentCounter       (0),
       _isSpinning           (false) {
     initialize();
@@ -64,7 +66,8 @@ WaitingSpinnerWidget::WaitingSpinnerWidget(QWidget *parent,
 
 WaitingSpinnerWidget::WaitingSpinnerWidget(Qt::WindowModality modality,
                                            QWidget *parent,
-                                           bool centerOnParent)
+                                           bool centerOnParent,
+                                           bool disableParentWhenSpinning)
     : QWidget(parent, Qt::Dialog | Qt::FramelessWindowHint),
       _color                (defaultColor),
       _roundness            (defaultRoundness),
@@ -79,6 +82,7 @@ WaitingSpinnerWidget::WaitingSpinnerWidget(Qt::WindowModality modality,
       // Other
       _timer                (0),
       _centerOnParent       (centerOnParent),
+      _disableParentWhenSpinning(disableParentWhenSpinning),
       _currentCounter       (0),
       _isSpinning           (false) {
     initialize();
@@ -135,6 +139,11 @@ void WaitingSpinnerWidget::start() {
     updatePosition();
     _isSpinning = true;
     show();
+
+    if(parentWidget() && _disableParentWhenSpinning) {
+        parentWidget()->setEnabled(false);
+    }
+
     if (!_timer->isActive()) {
         _timer->start();
         _currentCounter = 0;
@@ -144,6 +153,11 @@ void WaitingSpinnerWidget::start() {
 void WaitingSpinnerWidget::stop() {
     _isSpinning = false;
     hide();
+
+    if(parentWidget() && _disableParentWhenSpinning) {
+        parentWidget()->setEnabled(true);
+    }
+
     if (_timer->isActive()) {
         _timer->stop();
         _currentCounter = 0;
