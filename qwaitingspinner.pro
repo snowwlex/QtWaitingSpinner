@@ -6,7 +6,7 @@ CONFIG += staticlib flat
 TARGET = qwaitingspinner
 
 SOURCES += \
-    QtWaitingSpinner.cpp
+    waitingspinnerwidget.cpp
     
 HEADERS += \
-    QtWaitingSpinner.h
+    waitingspinnerwidget.h
