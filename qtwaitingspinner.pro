@@ -1,9 +1,8 @@
 QT += widgets
 
 TEMPLATE = lib
-
-CONFIG += staticlib flat
-TARGET = qwaitingspinner
+CONFIG += staticlib
+TARGET = qtwaitingspinner
 
 SOURCES += \
     waitingspinnerwidget.cpp
