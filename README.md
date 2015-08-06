@@ -1,3 +1,5 @@
+[![Qt Pods](http://qt-pods.org/assets/logo.png "Qt Pods")](http://qt-pods.org)
+
 QtWaitingSpinner
 ================
 
@@ -54,6 +56,11 @@ As an alternative example, the code below will create a spinner that (1) blocks 
 Please use [use this link](https://github.com/goblincoding/QtWaitingSpinner/issues) for feedback, requests or issues.
 
 Enjoy!
+
+###qt-pods
+
+QtWaitingSpinner is available as a pod within qt-pods. See here for reference:
+https://github.com/cybercatalyst/qt-pods
 
 ###Thanks
 
