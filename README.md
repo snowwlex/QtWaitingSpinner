@@ -53,7 +53,7 @@ As an alternative example, the code below will create a spinner that (1) blocks 
 	spinner->start(); // starts spinning
 ```
 
-Please use [use this link](https://github.com/goblincoding/QtWaitingSpinner/issues) for feedback, requests or issues.
+Please use [use this link](https://github.com/snowwlex/QtWaitingSpinner/issues) for feedback, requests or issues.
 
 Enjoy!
 
@@ -65,3 +65,7 @@ https://github.com/cybercatalyst/qt-pods
 ###Thanks
 
 QtWaitingSpinner was inspired by the [spin.js](http://fgnass.github.io/spin.js/)  project.
+
+
+### Forks
+There is also [QtWaitingSpinner for Python!](https://github.com/z3ntu/QtWaitingSpinner) Thanks to [z3ntu](https://github.com/z3ntu) for porting it.
