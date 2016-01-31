@@ -28,20 +28,19 @@ Despite being highly configurable, QtWaitingSpinner is extremely easy to use and
 For example, the embedded spinner in the QtWaitingSpinnerTest screenshot below can be created as follows:
 
 ```
-  QtWaitingSpinner* spinner = new QtWaitingSpinner(this);
+QtWaitingSpinner* spinner = new QtWaitingSpinner(this);
 
-  spinner->setRoundness(70.0);
-  spinner->setMinimumTrailOpacity(15.0);
-  spinner->setTrailFadePercentage(70.0);
-  spinner->setNumberOfLines(12);
-  spinner->setLineLength(10);
-  spinner->setLineWidth(5);
-  spinner->setInnerRadius(10);
-  spinner->setRevolutionsPerSecond(1);
-  spinner->setColor(QColor(81, 4, 71));
+spinner->setRoundness(70.0);
+spinner->setMinimumTrailOpacity(15.0);
+spinner->setTrailFadePercentage(70.0);
+spinner->setNumberOfLines(12);
+spinner->setLineLength(10);
+spinner->setLineWidth(5);
+spinner->setInnerRadius(10);
+spinner->setRevolutionsPerSecond(1);
+spinner->setColor(QColor(81, 4, 71));
 
-  spinner->start(); // gets the show on the road!
-
+spinner->start(); // gets the show on the road!
 ```
 
 ![test dialog](https://github.com/snowwlex/QtWaitingSpinner/blob/gh-pages/test-dialog.png)
@@ -49,8 +48,8 @@ For example, the embedded spinner in the QtWaitingSpinnerTest screenshot below c
 As an alternative example, the code below will create a spinner that (1) blocks all user input to the main application for as long as the spinner is active, (2) automatically centres itself on its parent widget every time "start" is called and (3) makes use of the default shape, size and colour settings.
 
 ```
-	QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
-	spinner->start(); // starts spinning
+QtWaitingSpinner* spinner = new QtWaitingSpinner(this, Qt::ApplicationModal, true);
+spinner->start(); // starts spinning
 ```
 
 Please use [use this link](https://github.com/snowwlex/QtWaitingSpinner/issues) for feedback, requests or issues.
@@ -68,4 +67,4 @@ QtWaitingSpinner was inspired by the [spin.js](http://fgnass.github.io/spin.js/)
 
 
 ### Forks
-There is also [QtWaitingSpinner for Python!](https://github.com/z3ntu/QtWaitingSpinner) Thanks to [z3ntu](https://github.com/z3ntu) for porting it.
+There is also [QtWaitingSpinner for Python!](https://github.com/z3ntu/QtWaitingSpinner). Thanks to [z3ntu](https://github.com/z3ntu) for porting it.
