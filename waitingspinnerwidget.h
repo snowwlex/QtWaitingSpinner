@@ -51,6 +51,7 @@ public slots:
 
 public:
     void setColor(QColor color);
+    void setTextColor(QColor color);
     void setRoundness(qreal roundness);
     void setMinimumTrailOpacity(qreal minimumTrailOpacity);
     void setTrailFadePercentage(qreal trail);
@@ -62,6 +63,8 @@ public:
     void setText(QString text);
 
     QColor color();
+    QColor textColor();
+    QString text();
     qreal roundness();
     qreal minimumTrailOpacity();
     qreal trailFadePercentage();
@@ -101,6 +104,9 @@ private:
     int     _lineLength;
     int     _lineWidth;
     int     _innerRadius;
+    QString _text;
+    QSize   _imageSize;
+    QColor  _textColor;
 
 private:
     WaitingSpinnerWidget(const WaitingSpinnerWidget&);
