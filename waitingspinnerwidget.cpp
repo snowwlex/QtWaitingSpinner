@@ -122,6 +122,8 @@ void WaitingSpinnerWidget::start() {
         _timer->start();
         _currentCounter = 0;
     }
+   
+    emit started();
 }
 
 void WaitingSpinnerWidget::stop() {
@@ -136,6 +138,8 @@ void WaitingSpinnerWidget::stop() {
         _timer->stop();
         _currentCounter = 0;
     }
+   
+    emit stopped();
 }
 
 void WaitingSpinnerWidget::setNumberOfLines(int lines) {
