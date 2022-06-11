@@ -1,5 +1,3 @@
-[![Qt Pods](http://qt-pods.org/assets/logo.png "Qt Pods")](http://qt-pods.org)
-
 QtWaitingSpinner
 ================
 
@@ -7,7 +5,7 @@ QtWaitingSpinner is a highly configurable, custom Qt widget for showing "waiting
 
 ![waiting spinner](https://github.com/snowwlex/QtWaitingSpinner/blob/gh-pages/waiting-spinners.gif)
 
-###Configuration
+### Configuration
 
 The following properties can all be controlled directly through their corresponding setters:
 
@@ -21,7 +19,7 @@ The following properties can all be controlled directly through their correspond
 * The percentage fade of the "trail"
 * The minimum opacity of the "trail"
 
-###Usage
+### Usage
 
 Despite being highly configurable, QtWaitingSpinner is extremely easy to use and, to make things even easier, the "QtWaitingSpinnerTest" application can assist you in determining the exact shape, size and colour you'd like your spinner to have.
 
@@ -57,12 +55,12 @@ Please use [use this link](https://github.com/snowwlex/QtWaitingSpinner/issues) 
 
 Enjoy!
 
-###qt-pods
+### qt-pods
 
 QtWaitingSpinner is available as a pod within qt-pods. See here for reference:
 https://github.com/cybercatalyst/qt-pods
 
-###Thanks
+### Thanks
 
 QtWaitingSpinner was inspired by the [spin.js](http://fgnass.github.io/spin.js/)  project.
 
