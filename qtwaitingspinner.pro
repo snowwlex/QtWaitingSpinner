@@ -1,7 +1,8 @@
 QT += widgets
 
 TEMPLATE = lib
-CONFIG += staticlib
+CONFIG += dll
+
 TARGET = qtwaitingspinner
 
 SOURCES += \
