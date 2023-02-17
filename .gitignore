@@ -24,3 +24,8 @@ QtWaitingSpinner.exe
 build-QtWaitingSpinnerTest-Desktop-Debug*
 build-QtWaitingSpinnerTest-GCC-Debug*
 build-QtWaitingSpinnerTest-Desktop_Qt_5_3_GCC_64bit-Debug*
+.qmake.stash
+build/
+moc_predefs.h
+Makefile.Debug
+Makefile.Release

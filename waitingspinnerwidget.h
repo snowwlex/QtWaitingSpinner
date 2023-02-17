@@ -19,6 +19,12 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+#if defined MAKE_WAITING_SPINNER_LIB
+    #define WAITING_SPINNER_LIB_EXPORT Q_DECL_EXPORT
+#else
+    #define WAITING_SPINNER_LIB_EXPORT Q_DECL_IMPORT
+#endif
+
 #pragma once
 
 // Qt includes
@@ -26,7 +32,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <QTimer>
 #include <QColor>
 
-class WaitingSpinnerWidget : public QWidget {
+class WAITING_SPINNER_LIB_EXPORT WaitingSpinnerWidget : public QWidget {
     Q_OBJECT
 public:
     /*! Constructor for "standard" widget behaviour - use this
